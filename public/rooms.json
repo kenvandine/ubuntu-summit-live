@@ -1,0 +1,19 @@
+{
+  "rooms": [
+    {
+      "slug": "main-stage",
+      "name": "Main stage",
+      "description": "Keynotes and headline talks"
+    },
+    {
+      "slug": "room-2",
+      "name": "Room 2",
+      "description": "Deep dives and technical sessions"
+    },
+    {
+      "slug": "workshops",
+      "name": "Workshops",
+      "description": "Hands-on sessions"
+    }
+  ]
+}

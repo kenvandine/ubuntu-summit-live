@@ -1,0 +1,85 @@
+// Vanilla framework (Canonical) with Yaru accents.
+@import 'vanilla-framework';
+@include vanilla;
+
+// Follow the OS light/dark preference using Vanilla's own theme tokens.
+@media (prefers-color-scheme: dark) {
+  :root {
+    @include vf-theme-dark;
+  }
+}
+
+:root {
+  // Yaru palette
+  --yaru-orange: #e95420;
+  --yaru-orange-strong: #c34113;
+  --yaru-aubergine: #2c001e;
+  --yaru-aubergine-mid: #5e2750;
+  --yaru-aubergine-light: #77216f;
+  --yaru-red: #c7162b;
+
+  --app-bg: #f7f7f7;
+  --app-surface: #ffffff;
+  --app-surface-raised: #ffffff;
+  --app-border: rgb(0 0 0 / 0.1);
+  --app-text-muted: #666;
+  --app-radius: 0.75rem;
+  --app-shadow: 0 1px 2px rgb(0 0 0 / 0.06), 0 8px 24px rgb(0 0 0 / 0.06);
+  --header-height: 3.5rem;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --app-bg: #1a1a1a;
+    --app-surface: #242424;
+    --app-surface-raised: #2c2c2c;
+    --app-border: rgb(255 255 255 / 0.1);
+    --app-text-muted: #aaa;
+    --app-shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px rgb(0 0 0 / 0.25);
+  }
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: var(--app-bg);
+  // Vanilla sets body margins for documents; this is an app shell.
+  margin: 0;
+}
+
+#app {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.u-text-muted {
+  color: var(--app-text-muted);
+}
+
+// Brand button for the primary call to action.
+.app-button-brand {
+  background: var(--yaru-orange);
+  border-color: var(--yaru-orange);
+  color: #fff;
+
+  &:hover:not([disabled]),
+  &:focus-visible {
+    background: var(--yaru-orange-strong);
+    border-color: var(--yaru-orange-strong);
+    color: #fff;
+  }
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
