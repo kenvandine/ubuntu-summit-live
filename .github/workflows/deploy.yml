@@ -28,7 +28,7 @@ jobs:
       - run: npm run build
         env:
           # Override per environment in Settings → Secrets and variables → Actions → Variables
-          VITE_DISCOURSE_URL: ${{ vars.DISCOURSE_URL || 'https://discourse.staging.ubuntu.com' }}
+          VITE_DISCOURSE_URL: ${{ vars.DISCOURSE_URL || 'https://discourse.ubuntu.com' }}
           BASE_PATH: /${{ github.event.repository.name }}/
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4
