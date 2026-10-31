@@ -60,7 +60,7 @@ MessageBus so you can see the polling fallback.
 
 Configuration lives in environment variables (see `.env.example`):
 
-- `VITE_DISCOURSE_URL`: the Discourse instance (default `https://discourse.staging.ubuntu.com`).
+- `VITE_DISCOURSE_URL`: the Discourse instance (default `https://discourse.ubuntu.com`).
   In CI it comes from the `DISCOURSE_URL` repository variable if set.
 - `BASE_PATH`: the path the app is served from (default `/ubuntu-summit-live/`).
 

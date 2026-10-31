@@ -4,7 +4,7 @@ const trimSlash = (url: string) => url.replace(/\/+$/, '')
 
 export const config = {
   /** Discourse instance the app talks to and signs in against. */
-  discourseUrl: trimSlash(import.meta.env.VITE_DISCOURSE_URL || 'https://discourse.staging.ubuntu.com'),
+  discourseUrl: trimSlash(import.meta.env.VITE_DISCOURSE_URL || 'https://discourse.ubuntu.com'),
   /** Shown to users on Discourse's "authorize application" screen. */
   applicationName: import.meta.env.VITE_APP_NAME || 'Ubuntu Summit Live',
   /**
