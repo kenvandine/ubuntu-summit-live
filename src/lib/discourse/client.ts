@@ -1,5 +1,5 @@
 // Thin fetch wrapper for the Discourse API, authenticated with a User API Key.
-// Later steps (rooms, chat, message bus) build on `discourse.get/post`.
+// Chat and the message bus build on `discourse.get/post/put/request`.
 
 import { config } from '../config'
 
@@ -50,7 +50,7 @@ export class DiscourseClient {
       headers.set('User-Api-Key', this.credentials.key)
       headers.set('User-Api-Client-Id', this.credentials.clientId)
     }
-    if (init.body && !(init.body instanceof FormData) && !headers.has('Content-Type')) {
+    if (typeof init.body === 'string' && !headers.has('Content-Type')) {
       headers.set('Content-Type', 'application/json')
     }
 
@@ -64,10 +64,27 @@ export class DiscourseClient {
 
     if (!res.ok) {
       const err = new DiscourseError(await errorMessage(res), res.status)
-      if (err.isAuthError && this.credentials) this.authErrorListeners.forEach((l) => l(err))
+      if (err.isAuthError && this.credentials) void this.checkKey(err, path)
       throw err
     }
     return res.status === 204 ? (undefined as T) : ((await res.json()) as T)
+  }
+
+  /**
+   * Discourse answers 403 both for a dead key and for "you can't do that here"
+   * (e.g. reacting in a read-only channel). Only end the session for the former.
+   */
+  private async checkKey(err: DiscourseError, path: string) {
+    let dead = err.status === 401 || path.startsWith('/session/current')
+    if (!dead) {
+      try {
+        const { current_user } = await this.get<{ current_user: unknown }>('/session/current.json')
+        dead = !current_user
+      } catch (e) {
+        dead = e instanceof DiscourseError && e.isAuthError
+      }
+    }
+    if (dead && this.credentials) this.authErrorListeners.forEach((l) => l(err))
   }
 
   get<T>(path: string) {
@@ -76,6 +93,10 @@ export class DiscourseClient {
 
   post<T>(path: string, body?: unknown) {
     return this.request<T>(path, { method: 'POST', body: body === undefined ? undefined : JSON.stringify(body) })
+  }
+
+  put<T>(path: string, body?: unknown) {
+    return this.request<T>(path, { method: 'PUT', body: body === undefined ? undefined : JSON.stringify(body) })
   }
 }
 

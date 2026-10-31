@@ -9,11 +9,13 @@ export const config = {
   applicationName: import.meta.env.VITE_APP_NAME || 'Ubuntu Summit Live',
   /**
    * User API key scopes requested at sign-in.
-   * - read / write: browse and post (chat messages come in a later step)
+   * - read / write: read and send chat messages, react
    * - session_info: look up who just signed in
    * - message_bus: live updates for chat
    */
   scopes: ['read', 'write', 'session_info', 'message_bus'],
+  /** Emoji set the Discourse site uses (Admin > Settings > emoji set), for reaction images. */
+  emojiSet: import.meta.env.VITE_EMOJI_SET || 'twitter',
 }
 
 /** Absolute URL of the app root; Discourse redirects here after sign-in. */
